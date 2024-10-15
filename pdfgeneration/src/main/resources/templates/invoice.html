@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+        /* Container for header and table to share the same border */
+        .invoice-container {
+            width: 100%;
+            border: 1px solid black;
+        }
+        /* Header for seller and buyer */
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid black; /* Line between seller and buyer */
+            align-items: flex-start;
+        }
+        .invoice-header > div {
+            width: 48%; /* Adjust width for both seller and buyer sections */
+        }
+        /* Vertical line separating seller and buyer */
+        .divider {
+            width: 1px;
+            background-color: black;
+            height: 100%;
+        }
+        /* Shared border between header and table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0;
+            font-size: 14px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        /* Ensure no bold text */
+        p, span {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <h2>Invoice</h2>
+
+    <!-- Shared container for header and product table -->
+    <div class="invoice-container">
+
+        <!-- Seller and Buyer Information -->
+        <div class="invoice-header">
+            <div>
+                <p>Seller:<br>
+                    <span th:text="${invoice.seller}">XYZ Pvt. Ltd.</span><br>
+                    <span th:text="${invoice.sellerAddress}">New Delhi, India</span><br>
+                    GSTIN: <span th:text="${invoice.sellerGstin}">29AABBCCDD121ZD</span>
+                </p>
+            </div>
+
+            <!-- Vertical divider between seller and buyer -->
+            <div class="divider"></div>
+
+            <div>
+                <p>Buyer:<br>
+                    <span th:text="${invoice.buyer}">Vedant Computers</span><br>
+                    <span th:text="${invoice.buyerAddress}">New Delhi, India</span><br>
+                    GSTIN: <span th:text="${invoice.buyerGstin}">29AABBCCDD131ZD</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Product Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically populated items -->
+                <tr th:each="item : ${invoice.items}">
+                    <td th:text="${item.name}">Product Name</td>
+                    <td th:text="${item.quantity}">Quantity</td>
+                    <td th:text="${item.rate}">Rate</td>
+                    <td th:text="${item.amount}">Amount</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
